@@ -1,13 +1,13 @@
-![alt text](https://github.com/kiarash8/kowidash-rtl/blob/main/presentation/logo.png)
-
 # Kowidash-RTL
+
+![Kowidash-RTL](https://github.com/kiarash8/kowidash-rtl/blob/main/presentation/logo.png)
 
 Kowidash is a RTL Dashboard
 
-![Demo CountPages alpha](https://github.com/kiarash8/kowidash-rtl/blob/main/presentation/desk.gif)
+![Demo Desk](https://github.com/kiarash8/kowidash-rtl/blob/main/presentation/desk.gif)
 
 
-![Demo CountPages alpha](https://github.com/kiarash8/kowidash-rtl/blob/main/presentation/mobile.gif)
+![Demo Mobile](https://github.com/kiarash8/kowidash-rtl/blob/main/presentation/mobile.gif)
 
 #### Main Features:
 - [React](https://reactjs.org/) Hooks
