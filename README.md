@@ -2,9 +2,10 @@
 
 Kowidash is a RTL Dashboard
 
-![Demo CountPages alpha](https://github.com/kiarash8/kowidash-rtl/presentation/desk.gif)
+![Demo CountPages alpha](https://github.com/kiarash8/kowidash-rtl/blob/main/presentation/desk.gif)
 
-![Demo CountPages alpha](https://github.com/kiarash8/kowidash-rtl/presentation/mobile.gif)
+
+![Demo CountPages alpha](https://github.com/kiarash8/kowidash-rtl/blob/main/presentation/mobile.gif)
 
 #### Main Features:
 - [React](https://reactjs.org/) Hooks
