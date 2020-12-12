@@ -1,3 +1,5 @@
+![alt text](https://github.com/kiarash8/kowidash-rtl/blob/main/presentation/logo.png)
+
 # Kowidash-RTL
 
 Kowidash is a RTL Dashboard
