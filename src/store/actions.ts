@@ -1,4 +1,4 @@
-import {Models} from './models';
+import {Models} from './model';
 
 export const Set = (model: string, payload: any, dispatch: any) => {
     return dispatch({

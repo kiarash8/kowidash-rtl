@@ -1,4 +1,4 @@
-import {Models} from './models';
+import { Models } from "./model";
 
 export function Reducer(state: any, action: any) {
     const [operations, model] = action.type.toString().split('_');

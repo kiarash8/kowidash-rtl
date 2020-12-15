@@ -1,35 +1,33 @@
 import React from 'react';
-import { Models } from './models';
+import { IContext, Models } from './model';
 import { Reducer } from './reducer';
 import { Set, Reset } from './actions';
 
-const Context = React.createContext<any>(null);
+
+const Context = React.createContext<IContext>({} as IContext);
+
+
 const Initializer = getModels();
 
 function getModels(){
-  const state: any = {};
+  const result: any = {};
   const modelKeys = Models.map(x=> x.name);
-  modelKeys.forEach(item => {
-    state[item] = getCurrentData(item);
+  modelKeys.forEach(key => {
+    result[key] = getCurrentData(key);
   });
-  return state;
+
+  return result;
 }
 function getCurrentData(model: string){
   const item = Models.find(x=> x.name === model);
-  if(item !== undefined){
+  if(item !== undefined)
     if(item.storage){
       const storageData = localStorage.getItem(model);
-      if(storageData !== null && storageData !==  undefined) {
-        return JSON.parse(storageData)
-      }
-      else{
-        return item.model;
-      }
+      if (storageData !== null && storageData !==  undefined) { return JSON.parse(storageData) }
+      else { return item.model }
     }
-    else{
-      return item.model;
-    }
-  }
+    else { return item.model }
+  return null;
 }
 
 const Provider = ({

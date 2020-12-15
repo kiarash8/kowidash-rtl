@@ -37,7 +37,7 @@ export const SideBar: FC = () => {
                     onClick={() =>
                         Store.Set('general', {'drawer': false}, dispatch)
                     }>
-                    {state.general.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                    <ChevronRightIcon />
                 </IconButton>
             </div>
             <Divider />
