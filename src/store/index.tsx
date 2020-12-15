@@ -3,10 +3,7 @@ import { IContext, Models } from './model';
 import { Reducer } from './reducer';
 import { Set, Reset } from './actions';
 
-
 const Context = React.createContext<IContext>({} as IContext);
-
-
 const Initializer = getModels();
 
 function getModels(){
