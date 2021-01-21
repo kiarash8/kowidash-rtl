@@ -13,13 +13,14 @@ Kowidash is a RTL Dashboard
 #### Main Features:
 - [React](https://reactjs.org/) Hooks
 - [Typescript](https://www.typescriptlang.org/) Structure
-- A great sample of using state management in React Hooks with Typescript
+- A great sample of using state management in React Hooks with Typescript (useContext, useReducer, model based)
 - Clean structure for Routing
 - Full RTL support
 - [Material Design](https://material-ui.com/)
 - Responsive
 - Dark/Light mode
 - Clean and maintainable code
+- Data Grid Components (sorting, filtering, pagination, structured columns, actions['link' | 'dialog' | 'throwback-data'], &...)
 - more features under construction
 
 
