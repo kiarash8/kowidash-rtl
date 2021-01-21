@@ -3,6 +3,7 @@ import DataGrid from '../data-grid';
 import { Column } from '../data-grid/model';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CreateIcon from '@material-ui/icons/Create';
+import DescriptionIcon from '@material-ui/icons/Description';
 
 const ProductList: React.FC = () => {
 
@@ -54,6 +55,18 @@ const ProductList: React.FC = () => {
       minWidth: 250,
       filter: 'none',
       actions: [
+        {
+            type: 'link',
+            button:{
+              variant: 'outlined',
+              color: 'primary',
+              caption: <DescriptionIcon />,
+            },
+            link:{
+              path: 'detail/view/:id',
+              data: ['id']
+            }
+        },
         {
           type: 'link',
           button:{

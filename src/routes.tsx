@@ -1,5 +1,6 @@
 import Login from "./components/auth/login";
 import Home from "./components/home";
+import Product from "./components/products/product";
 import ProductList from "./components/products/product-list";
 
 interface Route {
@@ -26,11 +27,25 @@ const Routes: Array<Route> = [
         layout: 'main'
     },
     {
+        id: 'products_new',
+        path: '/products/new',
+        component: Product,
+        layout: 'main',
+        title: 'محصول جدید'
+    },
+    {
         id: 'products_list',
         path: '/products/list',
         component: ProductList,
         layout: 'main',
         title: 'لیست محصولات'
+    },
+    {
+        id: 'products_detail',
+        path: '/products/detail/:mood/:id',
+        component: Product,
+        layout: 'main',
+        title: 'اطلاعات محصول'
     },
 ];
 
