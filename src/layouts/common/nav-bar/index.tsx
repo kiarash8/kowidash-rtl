@@ -16,11 +16,10 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import SearchIcon from '@material-ui/icons/Search';
 import { MessageMenu, NotificationMenu, UserMenu, MobileMenu } from './menu';
 import { Search } from './search';
-import { useLocation } from 'react-router-dom'; 
+import { useLocation, matchPath } from 'react-router-dom'; 
 import { useTheme } from '@material-ui/core/styles';
-
-
 import {Brightness4, Brightness7} from '@material-ui/icons';
+import Routes from '../../../routes';
 
 export const NavBar: FC = () => {
   const defaultTheme = useTheme();
@@ -29,38 +28,21 @@ export const NavBar: FC = () => {
   const { state, dispatch } = React.useContext(Store.Context);
   const [pageTitle, setPageTitle] = React.useState('');
 
-
-  // set page title from url paths
+  // set page title from match path
   useEffect(() => {
-    const paths = location.pathname.split('/');
-    const activeMenuId = (paths.length > 2 ? paths[2] : undefined);
-    const activeSubMenuId = (paths.length > 3 ? paths[3] : undefined);
-    const activeBetaSubMenuId = (paths.length > 4 ? paths[4] : undefined);
-
-    const activeMenu = activeMenuId ? Data.find(x => x.id === activeMenuId) : undefined;
-    const activeSubMenu =  (activeSubMenuId && activeMenu) ?
-    (activeMenu.children !== undefined) ?
-      activeMenu.children.find(x => x.id === activeSubMenuId)
-      : undefined
-    : undefined;
-    const activeBetaSubMenu =  (activeBetaSubMenuId && activeSubMenu) ?
-    (activeSubMenu.children !== undefined) ?
-      activeSubMenu.children.find(x => x.id === activeBetaSubMenuId)
-      : undefined
-    : undefined;
-    
-    if(activeBetaSubMenu){
-      setPageTitle(activeBetaSubMenu.caption);
+    const routeList = Routes.filter(x=> x.layout === 'main').map(x=> `/${x.layout}${x.path}`);
+    const match = matchPath(location.pathname, {
+      path: routeList
+    })
+    if(match){
+      const currentRoute = Routes.find(x=> x.path == match.path.replace('/main', ''));
+      if(currentRoute) {
+        setPageTitle(currentRoute.title);
+      }
     }
     else{
-      if(activeSubMenu){
-        setPageTitle(activeSubMenu.caption);
-      }
-      else if(activeMenu){
-        setPageTitle(activeMenu.caption);
-      }
+      setPageTitle('');
     }
-
   }, [location]);
 
   // user-menu

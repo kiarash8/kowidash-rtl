@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useState } from 'react';
-import clsx from 'clsx';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -7,15 +6,38 @@ import ListItemText from '@material-ui/core/ListItemText';
 import {Data, Imenu} from './data';
 import { SharedStyle } from '../shared-style';
 import Icon from '@material-ui/core/Icon';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation, matchPath } from 'react-router-dom'; 
+import Routes from '../../../../routes';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
 export const Menu: FC = () => {
     const classes = SharedStyle();
-    const location = window.location.pathname.split('/');
-    const activeMenu = (location.length > 2 ? location[2] : '');
+    const location = useLocation();
+    const [active, setActive] = useState({
+      id: '',
+      menu: '',
+      subMenu: ''
+    });
+
+    useEffect(() => {
+      const routeList = Routes.filter(x=> x.layout === 'main').map(x=> `/${x.layout}${x.path}`);
+      const match = matchPath(location.pathname, {
+        path: routeList
+      })
+      if(match){
+        const currentRoute = Routes.find(x=> x.path == match.path.replace('/main', ''));
+        if(currentRoute) {
+          const menuSplit = currentRoute.id.toString().split('_');
+          setActive({
+            id: currentRoute.id,
+            menu: menuSplit.length >= 2 ? menuSplit[0] : '',
+            subMenu: menuSplit.length === 3 ? menuSplit[1] : ''
+          });
+        }
+      }
+    }, [location]);
 
     return (
         <List
@@ -27,29 +49,34 @@ export const Menu: FC = () => {
                 item.type === 'link' ? 
                 <ListItem
                     key={index}
-                    className={`${ activeMenu === item.id ? classes.activeListItem : ''}`}
+                    className={`${ active.id === item.id ? classes.activeListItem : ''}`}
                     button
                     component={RouterLink}
                     to={item.state}>
                     <ListItemIcon className={classes.listItemIconContainer}>
                         <Icon className={classes.listItemIcon}>{item.icon}</Icon>
                     </ListItemIcon>
-                    <ListItemText className={`${classes.listItemText} ${ activeMenu === item.id ? classes.activeListItemText : ''}`} primary={item.caption} />
+                    <ListItemText className={`${classes.listItemText} ${ active.id === item.id ? classes.activeListItemText : ''}`} primary={item.caption} />
                 </ListItem>
-                : <SubMenu key={index} item={item} />
+                : <SubMenu
+                    key={index}
+                    item={item}
+                    activeId={active.id}
+                    activeMenu={active.menu}
+                    activeSubMenu={active.subMenu} />
             ))}
         </List>
     );
 }
 
-
-const SubMenu: FC<{item: Imenu}> = ({ item }) => {
+const SubMenu: FC<{
+  item: Imenu,
+  activeId: string,
+  activeMenu: string,
+  activeSubMenu: string}> = ({ item, activeId, activeMenu, activeSubMenu }) => {
     const classes = SharedStyle();
     const [open, setOpen] = useState(false);
     const [load, setLoad] = useState(false);
-    const location = window.location.pathname.split('/');
-    const activeMenu = (location.length > 2 ? location[2] : '');
-    const activeSubMenu = (location.length > 3 ? location[3] : '');
 
     useEffect(() => {
         if(activeMenu === item.id && !load){
@@ -81,15 +108,19 @@ const SubMenu: FC<{item: Imenu}> = ({ item }) => {
                     <ListItem
                         key={index}
                         button
-                        className={`${classes.nested} ${ activeMenu === item.id && activeSubMenu === el.id ? classes.activeListItem : ''}`}
+                        className={`${classes.nested} ${ activeMenu === item.id && activeId === el.id ? classes.activeListItem : ''}`}
                         component={RouterLink}
                         to={el.state}>
                     <ListItemText
                         className={`${classes.listItemText}
-                        ${ activeMenu === item.id && activeSubMenu === el.id ? classes.activeListItemText : ''}`}
+                        ${ activeMenu === item.id && activeId === el.id ? classes.activeListItemText : ''}`}
                         primary={el.caption} />
                     </ListItem>
-                    : <SubMenuBeta key={index} item={el} />
+                    : <SubMenuBeta
+                        key={index}
+                        item={el} 
+                        activeId={activeId}
+                        activeSubMenu={activeSubMenu} />
                 ))}
             </List>
             }
@@ -98,13 +129,14 @@ const SubMenu: FC<{item: Imenu}> = ({ item }) => {
     );
 }
 
-const SubMenuBeta: FC<{item: Imenu}> = ({ item }) => {
+const SubMenuBeta: FC<{
+  item: Imenu,
+  activeId: string,
+  activeSubMenu: string
+}> = ({ item, activeId, activeSubMenu }) => {
     const classes = SharedStyle();
     const [open, setOpen] = useState(false);
     const [load, setLoad] = useState(false);
-    const location = window.location.pathname.split('/');
-    const activeSubMenu = (location.length > 3 ? location[3] : '');
-    const activeBetaSubMenu = (location.length > 4 ? location[4] : '');
 
     useEffect(() => {
         if(activeSubMenu === item.id && !load){
@@ -133,12 +165,12 @@ const SubMenuBeta: FC<{item: Imenu}> = ({ item }) => {
                     <ListItem
                         key={index}
                         button
-                        className={`${classes.nestedBeta} ${ activeSubMenu === item.id && activeBetaSubMenu === el.id ? classes.activeListItem : ''}`}
+                        className={`${classes.nestedBeta} ${ activeSubMenu === item.id && activeId === el.id ? classes.activeListItem : ''}`}
                         component={RouterLink}
                         to={el.state}>
                     <ListItemText
                         className={`${classes.listItemText}
-                        ${ activeSubMenu === item.id && activeBetaSubMenu === el.id ? classes.activeListItemText : ''}`}
+                        ${ activeSubMenu === item.id && activeId === el.id ? classes.activeListItemText : ''}`}
                         primary={el.caption} />
                     </ListItem>
                 ))}
