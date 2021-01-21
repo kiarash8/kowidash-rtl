@@ -24,13 +24,13 @@ export let Data: Array<Imenu> = [
         icon: 'list_alt',
         children: [
             {
-                id: 'new',
+                id: 'products_new',
                 state: '/main/products/new',
                 caption: 'محصول جدید',
                 type: 'link',
             },
             {
-                id: 'list',
+                id: 'products_list',
                 state: '/main/products/list',
                 caption: 'لیست محصولات',
                 type: 'link',

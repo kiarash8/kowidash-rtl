@@ -1,5 +1,6 @@
 import Login from "./components/auth/login";
 import Home from "./components/home";
+import ProductList from "./components/products/product-list";
 
 interface Route {
     id: string;
@@ -23,6 +24,13 @@ const Routes: Array<Route> = [
         path: '/dashboard',
         component: Home,
         layout: 'main'
+    },
+    {
+        id: 'products_list',
+        path: '/products/list',
+        component: ProductList,
+        layout: 'main',
+        title: 'لیست محصولات'
     },
 ];
 
